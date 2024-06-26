@@ -1,6 +1,7 @@
 [
   // This file supports comments
   "lab/text",
+  "CamilleMelin-Julien/cmje",
   "stretch",
   "gamepad",
   "box2d",
