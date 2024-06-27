@@ -173,7 +173,7 @@ class camilleone {
   getInfo() {
     return {
       id: "cov",
-      name: Scratch.translate("Ask Before Closing Tab"),
+      name: Scratch.translate("camille extension"),
       blocks: [
         {
           opcode: "windowscontrols",
@@ -238,10 +238,9 @@ class camilleone {
         '---',
         {
           opcode: "Sound",
-          blockType: Scratch.BlockType.LABEL,
+          blockType: Scratch.BlockType.COMMAND,
           Text: "Sound",
         },
-        '---',
         {
           opcode: "playsou",
           blockType: Scratch.BlockType.COMMAND,
@@ -264,6 +263,59 @@ class camilleone {
             },
           },
         },
+        '---',
+        {
+          opcode: "extcre",
+          blockType: Scratch.BlockType.LABEL,
+          Text: "extesion creator",
+        },
+        {
+          opcode: "createblock",
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'create block opcode [OP] type [MENUTY] text [TXT] arguments [RIEN]',
+          arguments: {
+            OP: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "opcode",
+            },
+            MENUTY: {
+              type: Scratch.ArgumentType.STRING,
+              menu: "menutype",
+            },
+            TXT: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "text",
+            },
+            RIEN: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "arguments",
+            },
+          },
+        },
+        {
+          opcode: "createarguments",
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'create arguments name [NAME] type [MENUTY] defaultValue [TXT]',
+          arguments: {
+            NAME: {
+            type: Scratch.ArgumentType.STRING,
+            defaultValue: "NAME (must uppercase)",
+          },
+            MENUTY: {
+              type: Scratch.ArgumentType.STRING,
+              menu: "menuty",
+            },
+            TXT: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "text",
+            },
+          },
+        },
+        {
+          opcode: "infone",
+          blockType: Scratch.BlockType.LABEL,
+          Text: "put the [ARGUMENT]",
+        },
       ],
       menus: {
         option: {
@@ -276,6 +328,90 @@ class camilleone {
             {
               text: Scratch.translate("disabled"),
               value: "false",
+            },
+          ],
+        },
+        menutype: {
+          acceptReporters: true,
+          items: [
+            {
+              text: 'boolean',
+              value: "BOOLEAN",
+            },
+            {
+              text: 'button',
+              value: "BUTTON",
+            },
+            {
+              text: 'command',
+              value: "COMMAND",
+            },
+            {
+              text: 'conditional',
+              value: "CONDITIONAL",
+            },
+            {
+              text: 'event (not hat)',
+              value: "EVENT",
+            },
+            {
+              text: 'hat',
+              value: "HAT",
+            },
+            {
+              text: 'label',
+              value: "LABEL",
+            },
+            {
+              text: 'loop',
+              value: "LOOP",
+            },
+            
+            {
+              text: 'reporter',
+              value: "REPORTER",
+            },
+          ],
+        },
+        menuty: {
+          acceptReporters: true,
+          items: [
+            {
+              text: 'angle',
+              value: "ANGLE",
+            },
+            {
+              text: 'boolean',
+              value: "BOOLEAN",
+            },
+            {
+              text: 'color',
+              value: "COLOR",
+            },
+            {
+              text: 'costume',
+              value: "COSTUME",
+            },
+            {
+              text: 'matrix 5x5',
+              value: "MATRIX",
+            },
+            {
+              text: 'note (music)',
+              value: "NOTE",
+            },
+            {
+              text: 'number',
+              value: "NUMBER",
+            },
+            {
+              text: 'sound (out the extension)',
+              value: "SOUND",
+            },
+            
+            {
+              text: 'letter and number',
+              value: "STRING",
             },
           ],
         },
@@ -306,7 +442,30 @@ class camilleone {
   yesnosetControl(args){
   return confirm(args.CAMILLE)
   }
+  createblock (args){
+    let deb = "{ opcode: ";
+    let mide = ", blockType: Scratch.BlockType.";
+    let ate = ", text: ";
+    if (args.RIEN == "") {
+      let ata = ", },"
+      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + ata; 
+      return joined;
+    }else{
+      let ata = ", arguments: {";
+      let der = "}, },";
+      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + ata + args.RIEN + der; 
+      return joined;
+    }
+  }
+  createarguments (args){
+      let one = ": { type: Scratch.ArgumentType.";
+      let two = "defaultValue: '"
+      let free = "', },"
+      let joined = args.NAME + one + args.MENUTY + two + args.TXT + free; 
+      return joined;
+  }
 }
 
+// @ts-ignore
 Scratch.extensions.register(new (camilleone));
 })(Scratch);
