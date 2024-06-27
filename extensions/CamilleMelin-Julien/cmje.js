@@ -206,7 +206,7 @@ class camilleone {
         },
         {
           opcode: "yesnosetControl",
-          blockType:  Scratch.BlockType.COMMAND,
+          blockType:  Scratch.BlockType.BOOLEAN,
           text: 'comfirm[CAMILLE]',
           blockIconURI: winIcon,
           arguments: {
@@ -298,13 +298,13 @@ class camilleone {
     return playSound(path, util.target);
   }
   promptsetControl(args){
-    prompt(args.CAMILLE)
+    return prompt(args.CAMILLE)
   }
   alertsetControl(args){
     alert(args.CAMILLE)
   }
   yesnosetControl(args){
-    alert(args.CAMILLE)
+  return confirm(args.CAMILLE)
   }
 }
 
