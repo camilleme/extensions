@@ -1,7 +1,16 @@
-import { Block } from "scratch-blocks";
+// Name: camille extension
+// ID: cov
+// Description: benefit from more blocks and create extensions.
+// By: Camille-Block <https://scratch.mit.edu/users/Camille-Block/>
+// License: MIT
 
 (function (Scratch) {
   "use strict";
+
+  //put these back here so I don't have to define scratch.cast again.
+  let notMobile = false;
+
+  /* globals Accelerometer, Gyro */
 
 let enabled = false;
 
@@ -180,9 +189,8 @@ class camilleone {
       color3: '#ff0000',
       blocks: [
         {
-          opcode: "windows_controls",
           blockType: Scratch.BlockType.LABEL,
-          Text: "windows controls",
+          text: "windows controls",
         },
         {
           opcode: "promptsetControl",
@@ -193,9 +201,9 @@ class camilleone {
           arguments: {
             CAMILLE: {
             type: Scratch.ArgumentType.STRING,
-            defaultvalue: 'apple'
+            defaultvalue: "apple",
             },
-          }
+          },
         },
         {
           opcode: "alertsetControl",
@@ -206,9 +214,9 @@ class camilleone {
           arguments: {
             CAMILLE: {
             type: Scratch.ArgumentType.STRING,
-            defaultvalue: 'apple'
+            defaultvalue: "apple",
             },
-          }
+          },
         },
         {
           opcode: "yesnosetControl",
@@ -219,9 +227,9 @@ class camilleone {
           arguments: {
             CAMILLE: {
             type: Scratch.ArgumentType.STRING,
-            defaultvalue: 'apple'
+            defaultvalue: "apple",
             },
-          }
+          },
         },
         '---',
         {
@@ -233,7 +241,7 @@ class camilleone {
           arguments: {
             OPTION: {
               type: Scratch.ArgumentType.STRING,
-              menu: "option",
+              menu: "true",
             },
           },
         },
@@ -246,9 +254,8 @@ class camilleone {
         },
         '---',
         {
-          opcode: "Sound",
           blockType: Scratch.BlockType.LABEL,
-          Text: "Sound",
+          text: "Sound",
         },
         {
           opcode: "playsou",
@@ -276,14 +283,42 @@ class camilleone {
         },
         '---',
         {
-          opcode: "extesion_creator",
           blockType: Scratch.BlockType.LABEL,
-          Text: "extesion creator",
+          text: "extesion creator",
+        },
+        {
+          opcode: "create_extension",
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'create extension class [CLASS] ID [ID] name [NAME] divert [OPTION] blocks [BLOCKS] menus [MENUS] scripts [SCRIPTS]',
+          extensions: ["colours_looks"],
+          blockIconURI: blockIcon,
+          arguments:{
+            CLASS: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "camilleone",
+            },
+            ID: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "cov",
+            },
+            NAME: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: 'Scratch.translate("camille extension")',
+            },
+            OPTION: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
+            MENUS: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
+          },
         },
         {
           opcode: "createblock",
           blockType: Scratch.BlockType.REPORTER,
-          text: 'create block opcode [OP] type [MENUTY] text [TXT] arguments [RIEN]',
+          text: 'create block opcode [OP] type [MENUTY] text [TXT] arguments [RIEN] hiden [HIDEN] hide monitor [HM] [OT]',
           extensions: ["colours_looks"],
           blockIconURI: blockIcon,
           arguments: {
@@ -297,18 +332,29 @@ class camilleone {
             },
             TXT: {
               type: Scratch.ArgumentType.STRING,
-              defaultValue: "text",
+              defaultValue: "",
             },
             RIEN: {
               type: Scratch.ArgumentType.STRING,
               defaultValue: "arguments",
+            },
+            HIDEN: {
+              type: Scratch.ArgumentType.BOOLEAN,
+            },
+            HM: {
+              type: Scratch.ArgumentType.STRING,
+              menu: "true",
+            },
+            OT: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
             },
           },
         },
         {
           opcode: "createarguments",
           blockType: Scratch.BlockType.REPORTER,
-          text: 'create arguments name [NAME] type [MENUTY] defaultValue [TXT]',
+          text: 'create arguments to name [NAME] type [MENUTY] defaultValue [TXT] [OT]',
           extensions: ["colours_looks"],
           blockIconURI: blockIcon,
           arguments: {
@@ -324,12 +370,16 @@ class camilleone {
               type: Scratch.ArgumentType.STRING,
               defaultValue: "text",
             },
+            OT: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
           },
         },
         {
           opcode: "createargumentsimg",
           blockType: Scratch.BlockType.REPORTER,
-          text: 'create arguments image name [NAME] url [URL] flipRTL [TURE]',
+          text: 'create arguments image to name [NAME] url [URL] flipRTL [TURE] [OT]',
           extensions: ["colours_looks"],
           blockIconURI: blockIcon,
           arguments: {
@@ -345,28 +395,90 @@ class camilleone {
               type: Scratch.ArgumentType.STRING,
               menu: "true",
             },
+            OT: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
           },
         },
         {
-          opcode: "the_NAME_is_must_uppercase",
           blockType: Scratch.BlockType.LABEL,
-          Text: "put the [ARGUMENT] the NAME is must uppercase",
+          text: 'put the [ARGUMENT] the NAME is must uppercase',
+        },
+        {
+          opcode: 'spaced',
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'spaced [DER]',
+          extensions: ["colours_looks"],
+          blockIconURI: blockIcon,
+          disableMonitor: true,
+        },
+        {
+          opcode: 'colors',
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'color1 [ONE] color2 [TWO] color3 [FREE] [DER]',
+          extensions: ["colours_looks"],
+          blockIconURI: blockIcon,
+          hideFromPalette: false,
+          arguments: {
+            ONE: {
+            type: Scratch.ArgumentType.COLOR,
+            defaultValue: "#1eff00",
+            },
+            TWO: {
+              type: Scratch.ArgumentType.COLOR,
+              defaultValue: "#ff0000",
+            },
+            FREE: {
+              type: Scratch.ArgumentType.COLOR,
+              defaultValue: "#fcb1e3",
+            },
+            DER: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
+          },
+        },
+        {
+          opcode: 'scr',
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'add script in [OP] code [DF] args (true V) [DER]',
+          extensions: ["colours_looks"],
+          blockIconURI: blockIcon,
+          arguments: {
+            OP: {
+            type: Scratch.ArgumentType.STRING,
+            defaultValue: "opcode",
+            },
+            DF: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "//script",
+            },
+            DER: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
+          },
+        },
+        {
+          opcode: 'docplusmodeuri',
+          blockType: Scratch.BlockType.REPORTER,
+          text: 'add doc to url/uri [DF] [DER]',
+          extensions: ["colours_looks"],
+          blockIconURI: blockIcon,
+          arguments: {
+            DF: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "//script",
+            },
+            DER: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "",
+            },
+          },
         },
       ],
       menus: {
-        option: {
-          acceptReporters: true,
-          items: [
-            {
-              text: Scratch.translate("enabled"),
-              value: "true",
-            },
-            {
-              text: Scratch.translate("disabled"),
-              value: "false",
-            },
-          ],
-        },
         menutype: {
           acceptReporters: true,
           items: [
@@ -383,8 +495,16 @@ class camilleone {
               value: "COMMAND",
             },
             {
+              text: 'terminal command',
+              value: "COMMAND, isTerminal: true",
+            },
+            {
               text: 'conditional',
               value: "CONDITIONAL",
+            },
+            {
+              text: 'terminal conditional',
+              value: "CONDITIONAL, isTerminal: true",
             },
             {
               text: 'event (not hat)',
@@ -399,8 +519,8 @@ class camilleone {
               value: "LABEL",
             },
             {
-              text: 'loop',
-              value: "LOOP",
+              text: 'terminal loop',
+              value: "LOOP, isTerminal: true",
             },
             
             {
@@ -478,7 +598,6 @@ class camilleone {
   playsou({ path }, util) {
     playSound(path, util.target);
   }
-
   playsouUntilDone({ path }, util) {
     return playSound(path, util.target);
   }
@@ -496,35 +615,72 @@ class camilleone {
   yesnosetControl(args){
   return confirm(args.CAMILLE)
   }
+  create_extension(args){
+    let one = "class ";
+    let two = ' { getInfo() { return { id: "'
+    let free = '", name: "';
+    let four = '",';
+    let five = ' blocks: [';
+    let six = '], menus: {';
+    let seven = '}, }; }';
+    let heit = '} Scratch.extensions.register(new (';
+    let nine = '));';
+    let all = one + args.CLASS + two + args.ID + free + args.NAME + four + args.OPTION + five + args.BLOCKS + six + args.MENUS + seven + args.SCRIPTS + heit + args.CLASS + nine;
+    return all;
+  }
   createblock (args){
-    let deb = "{ opcode: ";
-    let mide = ", blockType: Scratch.BlockType.";
-    let ate = ", text: ";
+    let deb = '{ opcode: "';
+    let mide = '", blockType: Scratch.BlockType.';
+    let hide = "hideFromPalette: "
+    let moni = ", disableMonitor: "
+    let ate = ", text: '";
     if (args.RIEN == "") {
-      let ata = ", },"
-      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + ata; 
+      let ata = "', },"
+      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + hide + args.HIDEN + moni + args.HM + ata + args.OT; 
       return joined;
     }else{
-      let ata = ", arguments: {";
+      let ata = "', arguments: {";
       let der = "}, },";
-      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + ata + args.RIEN + der; 
+      let joined = deb + args.OP + mide + args.MENUTY + ate + args.TXT + hide + args.HIDEN + moni + args.HM + ata + args.RIEN + der + args.OT; 
       return joined;
     }
   }
   createarguments (args){
       let one = ": { type: Scratch.ArgumentType.";
-      let two = "defaultValue: '"
-      let free = "', },"
-      let joined = args.NAME + one + args.MENUTY + two + args.TXT + free; 
+      let two = " defaultValue: '"
+      let free = "', }," 
+      let joined = args.NAME + one + args.MENUTY + two + args.TXT + free + args.OT; 
       return joined;
   }
   createargumentsimg (args){
-    let one = ": { type: Scratch.ArgumentType.IMAGE,";
+    let one = ": { type: Scratch.ArgumentType.IMAGE, ";
     let two = "dataURI: "
     let free = ", flipRTL: ";
-    let four = "' },";
-    let joined = args.NAME + one + two + args.URL + free + args.TURE + four; 
+    let four = "' }, ";
+    let joined = args.NAME + one + two + args.URL + free + args.TURE + four + args.OT; 
     return joined;
+  }
+  spaced(args){
+    let bloc = "'---',";
+    return bloc + args.DER;
+  }
+  colors(args){
+    let one = "colors1: '";
+    let two = "', colors2: '";
+    let free = "', colors3: '";
+    let four = "', ";
+    let colors = one + args.ONE + two + args.TWO + free + args.FREE + four + args.DER;
+    return colors;
+  }
+  scr(args){
+    let one = "(args){";
+    let two = "}";
+    let tous = args.OP + one + args.DF + two + args.DER;
+    return tous;
+  }
+  docplusmodeuri(args){
+    let ori = "      docsURI: '"
+    let fin = "',";
   }
 }
 
